@@ -12,7 +12,7 @@ app.use("/", (req, res, next) => {
 });
 
 // MongoDB connection
-mongoose.connect("mongodb+srv://Nimansala:D3uMi8NBQFJdM6Gq@cluster0.uyte8.mongodb.net/")
+mongoose.connect("mongodb+srv://Nimansala:<password>@cluster0.uyte8.mongodb.net/")
     .then(() => console.log("Connected to MongoDB"))
     .then(() => {
         app.listen(5000, () => {
