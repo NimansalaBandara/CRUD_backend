@@ -14,7 +14,11 @@ app.use(express.json()); // This is important for handling JSON requests
 app.use("/users", router);
 
 // MongoDB connection
+<<<<<<< HEAD
 mongoose.connect("mongodb+srv://Nimansala:D3uMi8NBQFJdM6Gq@cluster0.uyte8.mongodb.net/yourDatabaseName") 
+=======
+mongoose.connect("mongodb+srv://Nimansala:<password>@cluster0.uyte8.mongodb.net/")
+>>>>>>> 453e19150f57bf6302921f780175db9087e9d7c5
     .then(() => console.log("Connected to MongoDB"))
     .then(() => {
         app.listen(5000, () => {
