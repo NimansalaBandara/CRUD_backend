@@ -1,22 +1,24 @@
 //console.log("");
 //D3uMi8NBQFJdM6Gq
-const express = require("express");
+const express = require("express"); 
 const mongoose = require("mongoose");
+const router = require("./Routes/UserRouters");  // Ensure this path is correct
 
 // Create an instance of express
 const app = express();
 
-// Middleware
-app.use("/", (req, res, next) => {
-    res.send("It Is Working");
-});
+// Middleware for parsing JSON bodies
+app.use(express.json()); // This is important for handling JSON requests
+
+// Middleware for routing
+app.use("/users", router);
 
 // MongoDB connection
-mongoose.connect("mongodb+srv://Nimansala:D3uMi8NBQFJdM6Gq@cluster0.uyte8.mongodb.net/")
+mongoose.connect("mongodb+srv://Nimansala:D3uMi8NBQFJdM6Gq@cluster0.uyte8.mongodb.net/yourDatabaseName") 
     .then(() => console.log("Connected to MongoDB"))
     .then(() => {
         app.listen(5000, () => {
             console.log("Server is running on port 5000");
         });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log("MongoDB connection error:", err)); // More descriptive error logging
