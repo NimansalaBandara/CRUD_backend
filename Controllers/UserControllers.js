@@ -1,14 +1,14 @@
 const User = require("../Model/UserModel"); // Import the User model
 
+// Get all users
 const getAllUsers = async (req, res, next) => {
-    let users; // Use camelCase for variable names
+    let users;
 
-    // Get all users
     try {
         users = await User.find();
     } catch (err) {
-        console.error(err); // Log the error to the console
-        return res.status(500).json({ message: "Server error" }); // Return a 500 status on error
+        console.error(err); // Log the error
+        return res.status(500).json({ message: "Server error" });
     }
 
     // If no users found
@@ -16,9 +16,47 @@ const getAllUsers = async (req, res, next) => {
         return res.status(404).json({ message: "Users not found" });
     }
 
-    // Return all users
     return res.status(200).json({ users });
 };
 
-// Exporting the getAllUsers function
+// Add a user
+const addUsers = async (req, res, next) => {
+    const { name, gmail, age, address } = req.body; // Destructure the body correctly
+
+    let user;
+    try {
+        // Corrected the typo in 'address'
+        user = new User({ name, gmail, age, address });
+        await user.save(); // Save user to the database
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Server error" });
+    }
+
+    // If user not inserted
+    if (!user) {
+        return res.status(404).json({ message: "Unable to add user" });
+    }
+
+    return res.status(200).json({ user });
+};
+const getById = async (req, res, next) => {
+    const id = req.params.id;
+    let user;
+
+    try{
+        user = await User.findById(id);
+    }catch(err){
+        console.log(err);
+    }
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ user });
+
+}
+// Exporting the functions
 exports.getAllUsers = getAllUsers;
+exports.addUsers = addUsers;
+exports.getById = getById;

@@ -9,6 +9,8 @@ const UserController = require("../Controllers/UserControllers");  // Ensure thi
 
 // Route for getting all users
 router.get("/", UserController.getAllUsers);
+router.post("/", UserController.addUsers);
+router.get("/:id", UserController.getById);
 
 // Export router
 module.exports = router;
