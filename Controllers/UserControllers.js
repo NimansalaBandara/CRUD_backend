@@ -57,6 +57,44 @@ const getById = async (req, res, next) => {
 
 }
 // Exporting the functions
+const updateUser = async (req, res, next) =>{
+    const id = req.params.id;
+    const { name, gmail, age, address } = req.body;
+    let users;
+    try{
+        users = await User.findByIdAndUpdate(id,
+           {name:name, gmail:gmail, age:age} 
+        );
+        users =  await users.save();
+    }catch(err){
+        console.log(err);
+    }
+    if (!users) {
+        return res.status(404).json({ message: "Unable to update user details" });
+    }
+
+    return res.status(200).json({ users });
+}
+
+const deleteUser = async (req, res, next) => {
+    const id = req.params.id;
+
+    let user;
+
+    try{
+        user= await User.findByIdAndDelete(id);
+    }catch(err){
+        console.log(err);
+    }
+    if (!user) {
+        return res.status(404).json({ message: "Unable to delete" });
+    }
+
+    return res.status(200).json({ user });
+    
+}
 exports.getAllUsers = getAllUsers;
 exports.addUsers = addUsers;
 exports.getById = getById;
+exports.updateUser =  updateUser;
+exports.deleteUser = deleteUser;
